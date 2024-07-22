@@ -59,13 +59,10 @@
                         die("Connection failed: " . mysqli_connect_error());
                     }
 
-                    // Hash password
-                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
                     // Prepare and execute insert statement
                     $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
                     $stmt = mysqli_prepare($connect, $sql);
-                    mysqli_stmt_bind_param($stmt, "sss", $name, $email, $hashed_password);
+                    mysqli_stmt_bind_param($stmt, "sss", $name, $email, $password);
 
                     if (mysqli_stmt_execute($stmt)) {
                         echo "<div class='alert alert-success'>Registration successful.</div>";

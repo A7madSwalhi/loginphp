@@ -60,15 +60,15 @@
                             if ($stmt) {
                                 mysqli_stmt_bind_param($stmt, "s", $email);
                                 mysqli_stmt_execute($stmt);
-                                mysqli_stmt_bind_result($stmt, $hashed_password);
+                                mysqli_stmt_bind_result($stmt, $stored_password);
                                 mysqli_stmt_fetch($stmt);
 
                                 // Check if the email exists
-                                if (!$hashed_password) {
+                                if (!$stored_password) {
                                     $errors[] = "Invalid email or password.";
                                 } else {
-                                    // Verify password
-                                    if (password_verify($password, $hashed_password)) {
+                                    // Verify password (since the password is stored as plain text)
+                                    if ($password === $stored_password) {
                                         echo "<div class='alert alert-success'>Login successful.</div>";
                                         // Start session or redirect to another page here
                                     } else {
